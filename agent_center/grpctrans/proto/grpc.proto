@@ -1,0 +1,21 @@
+syntax = "proto3";
+option go_package = "pb";
+package proto;
+
+//agent --> server
+message RawData {
+  repeated string IntranetIPV4 = 1; //intranetIPv4 list
+  repeated string ExtranetIPV4 = 2; //extranetIPv4 list
+  repeated string IntranetIPV6 = 3; //intranet IPv6 list
+  repeated string ExtranetIPV6 = 4; //extranet IPv6 list
+
+  string HostName = 5;
+  string AgentID = 6;
+  int64  Timestamp = 7;
+  string Version = 8;
+  repeated Record Pkg = 9;
+}
+
+message Record {
+  map<string,string> message = 1;
+}
