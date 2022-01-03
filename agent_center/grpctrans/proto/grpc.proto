@@ -10,12 +10,38 @@ message RawData {
   repeated string ExtranetIPV6 = 4; //extranet IPv6 list
 
   string HostName = 5;
-  string AgentID = 6;
+  string AgentID = 6;   //Agent unique id agent唯一id标识
   int64  Timestamp = 7;
-  string Version = 8;
+  string Version = 8;   //Agent version
   repeated Record Pkg = 9;
 }
 
 message Record {
   map<string,string> message = 1;
+}
+
+//server --> agent
+message Command {
+  int32 AgentCtrl = 1;  //Agent Control command
+  PluginTask Task = 2;  //Agent Task
+  repeated ConfigItem Config = 3; //Plugin/Agent-host config
+}
+
+message PluginTask {
+  string Name = 1;  //插件名称，用于标识不同的插件
+  string Data = 2;  //数据透传到插件
+  string Token = 3; //用于协商的令牌
+}
+
+message ConfigItem {
+  string Name = 1;
+  string Version = 2;
+  string SHA256 = 3;
+  repeated string DownloadURL = 4;
+  string Detail = 5;
+}
+
+//Transfer 定义传输接口
+service Transfer {
+  rpc Transfer(stream RawData) returns (stream Command){}
 }
