@@ -1,7 +1,6 @@
 package transport
 
 import (
-	"ElkeidCopy/agent/proto"
 	"context"
 	"sync"
 )
